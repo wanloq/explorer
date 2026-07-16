@@ -1,0 +1,148 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* ---------------------------------------------------------------------
+ * Brand design tokens (replaces tailwind.config.js in Tailwind CSS v4)
+ * ------------------------------------------------------------------- */
+@theme {
+  --color-forest-50: #EAF0ED;
+  --color-forest-100: #CFDCD5;
+  --color-forest-200: #9FB9AC;
+  --color-forest-300: #6F9683;
+  --color-forest-400: #47725D;
+  --color-forest-500: #2C5341;
+  --color-forest-600: #1F4234;
+  --color-forest-700: #16332A;
+  --color-forest-800: #0F241F;
+  --color-forest-900: #091714;
+  --color-forest: var(--color-forest-700);
+
+  --color-gold-50: #FBF5E2;
+  --color-gold-100: #F5E7BB;
+  --color-gold-200: #EBCF7E;
+  --color-gold-300: #DDB94D;
+  --color-gold-400: #C9A227;
+  --color-gold-500: #AD8720;
+  --color-gold-600: #8C6D1A;
+  --color-gold-700: #6B5314;
+  --color-gold: var(--color-gold-400);
+
+  --color-cream-100: #FFFDFA;
+  --color-cream-200: #F8F5EE;
+  --color-cream-300: #F0EADC;
+  --color-cream: var(--color-cream-200);
+
+  --color-charcoal: #20241F;
+
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+
+  --tracking-widest2: 0.28em;
+
+  --breakpoint-8xl: 90rem;
+
+  --shadow-card: 0 20px 45px -20px rgba(22, 51, 42, 0.35);
+
+  --animate-fade-up: fadeUp 0.7s ease-out both;
+  --animate-marquee: marquee 28s linear infinite;
+
+  @keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* Explicit source scanning — partials/templates live across this tree */
+@source "./partials";
+@source "./js";
+@source "./index.template.html";
+@source "../dist/index.html";
+
+@utility max-w-8xl {
+  max-width: 90rem;
+}
+
+@utility tracking-widest2 {
+  letter-spacing: 0.28em;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream-200 text-charcoal font-body antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+  ::selection {
+    @apply bg-gold-400 text-forest-900;
+  }
+  :focus-visible {
+    outline: 2px solid #C9A227;
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold tracking-widest2 uppercase text-gold-500;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-forest-700 px-7 py-3.5 text-sm font-semibold text-cream-100 transition hover:bg-forest-600 focus-visible:bg-forest-600;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-forest-700/20 bg-transparent px-7 py-3.5 text-sm font-semibold text-forest-700 transition hover:bg-forest-700 hover:text-cream-100;
+  }
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-gold-400 px-7 py-3.5 text-sm font-semibold text-forest-900 transition hover:bg-gold-300;
+  }
+  .pill-filter {
+    @apply cursor-pointer whitespace-nowrap rounded-full border border-forest-700/15 bg-white px-5 py-2.5 text-sm font-medium text-forest-700/80 transition hover:border-forest-700/40 aria-selected:bg-forest-700 aria-selected:text-cream-100 aria-selected:border-forest-700;
+  }
+  .estate-card {
+    @apply overflow-hidden rounded-2xl bg-white shadow-card ring-1 ring-forest-900/5 transition duration-300 hover:-translate-y-1;
+  }
+  .section-container {
+    @apply mx-auto max-w-8xl px-6 sm:px-8 lg:px-12;
+  }
+  .header-text {
+    @apply text-cream-100;
+  }
+  #site-header.scrolled {
+    @apply bg-cream-100/95 shadow-[0_1px_0_0_rgba(22,51,42,0.08)] backdrop-blur;
+  }
+  #site-header.scrolled .header-text {
+    @apply text-forest-700;
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  .reveal.in-view {
+    @apply animate-fade-up;
+  }
+}

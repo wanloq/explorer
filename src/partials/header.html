@@ -1,0 +1,43 @@
+<header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-colors duration-300" data-state="top">
+  <nav class="section-container flex items-center justify-between py-5" aria-label="Primary">
+    <a href="/" class="flex items-center gap-2" aria-label="Explorer Homes and Properties — Home">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M17 2 L31 12 V31 H3 V12 Z" stroke="currentColor" stroke-width="1.6" fill="none"/>
+        <path d="M12 31 V19 H22 V31" stroke="currentColor" stroke-width="1.6" fill="none"/>
+      </svg>
+      <span class="font-display text-lg font-semibold tracking-tight header-text">Explorer<span class="text-gold-400">.</span></span>
+    </a>
+
+    <ul class="hidden items-center gap-9 text-sm font-medium header-text lg:flex">
+      <li><a href="#estates" class="hover:text-gold-400 transition">Estates</a></li>
+      <li><a href="#about" class="hover:text-gold-400 transition">About Us</a></li>
+      <li><a href="#projects" class="hover:text-gold-400 transition">Projects</a></li>
+      <li><a href="#locations" class="hover:text-gold-400 transition">Locations</a></li>
+      <li><a href="#contact" class="hover:text-gold-400 transition">Contact Us</a></li>
+    </ul>
+
+    <div class="hidden items-center gap-5 lg:flex">
+      <span class="text-xs font-semibold tracking-widest2 header-text">EN&nbsp;|&nbsp;NG</span>
+      <a href="tel:+2348001234567" class="flex items-center gap-2 rounded-full border border-current/20 px-4 py-2 text-sm font-semibold header-text hover:border-gold-400 hover:text-gold-400 transition">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1L6.6 10.8Z" stroke="currentColor" stroke-width="1.5"/></svg>
+        +234 800 123 4567
+      </a>
+    </div>
+
+    <button id="menu-toggle" type="button" class="header-text lg:hidden" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden lg:hidden bg-forest-700 px-6 pb-8 pt-2 text-cream-100">
+    <ul class="flex flex-col gap-5 text-base font-medium">
+      <li><a href="#estates" class="block py-1">Estates</a></li>
+      <li><a href="#about" class="block py-1">About Us</a></li>
+      <li><a href="#projects" class="block py-1">Projects</a></li>
+      <li><a href="#locations" class="block py-1">Locations</a></li>
+      <li><a href="#contact" class="block py-1">Contact Us</a></li>
+      <li class="pt-2"><a href="tel:+2348001234567" class="btn-gold w-full">Call +234 800 123 4567</a></li>
+    </ul>
+  </div>
+</header>
