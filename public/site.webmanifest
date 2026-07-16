@@ -1,0 +1,12 @@
+{
+  "name": "Explorer Homes and Properties Limited",
+  "short_name": "Explorer Homes",
+  "description": "Trusted land and real estate company in Lagos and Ogun State, Nigeria.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8F5EE",
+  "theme_color": "#16332A",
+  "icons": [
+    { "src": "/images/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

@@ -9,6 +9,18 @@ const ROOT = path.join(__dirname, "..");
 const PARTIALS_DIR = path.join(__dirname, "partials");
 const TEMPLATE = path.join(__dirname, "index.template.html");
 const DIST = path.join(ROOT, "dist");
+const PUBLIC_DIR = path.join(ROOT, "public");
+
+function copyDir(src, dest) {
+  if (!fs.existsSync(src)) return;
+  fs.mkdirSync(dest, { recursive: true });
+  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
+    if (entry.isDirectory()) copyDir(srcPath, destPath);
+    else fs.copyFileSync(srcPath, destPath);
+  }
+}
 
 function includePartials(html) {
   const includeRe = /<!--@include\s+([\w.-]+)\s*-->/g;
@@ -34,6 +46,9 @@ function build() {
 
   fs.copyFileSync(path.join(__dirname, "js", "main.js"), path.join(DIST, "js", "main.js"));
   console.log("✔ dist/js/main.js copied");
+
+  copyDir(PUBLIC_DIR, DIST);
+  console.log("✔ public/ assets (robots.txt, sitemap.xml, images, manifest) copied to dist/");
 }
 
 build();

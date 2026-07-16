@@ -8,11 +8,19 @@ company in Lagos/Ogun State, Nigeria. Built with semantic HTML partials, Tailwin
 
 ```
 ehp-site/
+├── .github/workflows/deploy.yml  # GitHub Actions: build + deploy dist/ to Pages
+├── .gitignore                # ignores node_modules/ and generated dist/
 ├── package.json              # tailwindcss v4 + @tailwindcss/cli (no config file)
+├── public/                   # static passthrough assets, copied into dist/ as-is
+│   ├── robots.txt
+│   ├── sitemap.xml
+│   ├── site.webmanifest
+│   └── images/favicon.svg
+│   # (add a CNAME file here later if/when you set up a custom domain — see below)
 ├── src/
 │   ├── input.css             # Tailwind v4 CSS-first config: @theme tokens, @source, @layer components
 │   ├── index.template.html   # page shell with <!--@include file.html--> markers
-│   ├── build.js              # assembles partials -> dist/index.html
+│   ├── build.js              # assembles partials -> dist/index.html, copies public/ -> dist/
 │   ├── js/main.js            # menu, filters, FAQ accordion, testimonial slider, reveal-on-scroll
 │   └── partials/
 │       ├── head.html         # SEO meta, Open Graph, Twitter cards, JSON-LD (RealEstateAgent + FAQPage)
@@ -26,7 +34,7 @@ ehp-site/
 │       ├── faq.html
 │       ├── cta.html
 │       └── footer.html
-└── dist/                     # generated output — deploy this folder as-is
+└── dist/                     # generated output (git-ignored) — deploy this folder as-is
     ├── index.html
     ├── css/output.css
     ├── js/main.js
@@ -58,6 +66,51 @@ CSS-native configuration directly in `src/input.css`:
 
 There is no `tailwind.config.js` or `postcss.config.js` in this project —
 everything Tailwind needs lives in `src/input.css`.
+
+## Deploying to GitHub Pages
+
+`dist/` is a **generated** folder (it's git-ignored), so GitHub Pages can't just
+serve it off the `main` branch directly — Pages needs files at the repo root,
+in `/docs`, or on a `gh-pages` branch. The included workflow
+(`.github/workflows/deploy.yml`) handles this automatically:
+
+1. Push this repo to GitHub.
+2. In the repo, go to **Settings → Pages → Build and deployment → Source**
+   and choose **GitHub Actions** (not "Deploy from a branch").
+3. Push to `main` (or run the workflow manually from the **Actions** tab).
+   The workflow runs `npm ci && npm run build`, then uploads `dist/` as the
+   Pages artifact and deploys it — no manual copying of files needed.
+4. Your site will be live at `https://<username>.github.io/<repo>/` (or your
+   custom domain, see below).
+
+**Asset paths:** all CSS/JS/image references use **relative paths**
+(`css/output.css`, `js/main.js`, `images/favicon.svg`, etc.), so the site works
+correctly out of the box on a GitHub *project page*
+(`https://<username>.github.io/<repo>/`) with no custom domain needed.
+
+### Adding a custom domain later
+
+When you're ready to point a real domain (e.g. `www.explorerhomesandproperties.com`)
+at this site, the relative asset paths above need no changes — only these steps:
+
+1. Add a `CNAME` file to `public/CNAME` containing just your domain, e.g.:
+   ```
+   www.explorerhomesandproperties.com
+   ```
+   (`build.js` copies everything in `public/` into `dist/` automatically, so it
+   will be included in the next deploy.)
+2. At your DNS provider, add either:
+   - a `CNAME` record for `www` → `<username>.github.io`, or
+   - `A` records for the apex domain pointing to GitHub's Pages IPs
+     (`185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`),
+   per [GitHub's custom domain docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
+3. In the repo's **Settings → Pages**, enter the custom domain and enable
+   **Enforce HTTPS** once DNS has propagated.
+4. Update the absolute URLs that reference the production domain — the
+   `canonical`, Open Graph/Twitter `og:url`/`og:image` tags and JSON-LD in
+   `src/partials/head.html`, plus `public/robots.txt` and `public/sitemap.xml`
+   — so they point at your live domain rather than the placeholder
+   `explorerhomesandproperties.com` URLs currently in place.
 
 ## Build
 
